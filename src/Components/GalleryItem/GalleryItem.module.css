@@ -1,0 +1,57 @@
+.item {
+  flex-basis: calc(24% - 20px);
+  height: 280px;
+  margin-bottom: 40px;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.img {
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+}
+
+.stats {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  background-color: #c5c3c33a;
+  width: 100%;
+}
+
+.statsItem {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: baseline;
+  flex-direction: column;
+  cursor: default;
+  color: #525252;
+  font-family: sans-serif;
+}
+
+.fullScreenBtn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  outline: none;
+  border: none;
+  width: 60px;
+  height: 60px;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  transition: 0.2s linear;
+}
+
+.item:hover .fullScreenBtn {
+  opacity: 1;
+}
