@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "gh-pages": "^2.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -44,5 +45,5 @@
     "lint-staged": "^8.1.5",
     "prettier": "^1.17.0"
   },
-  "homepage": "https://danil44.github.io/goit-react-hw-01/"
+  "homepage": "https://danil44.github.io/goit-react-hw-03-image-finder/"
 }

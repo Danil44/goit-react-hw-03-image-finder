@@ -11,8 +11,6 @@ export default class Gallery extends Component {
   componentDidUpdate(prevProps) {
     const { data } = this.props;
     if (prevProps.data.length !== data) {
-      console.log(this.listRef);
-
       window.scrollTo({
         left: 0,
         top: this.listRef.current.scrollHeight,
