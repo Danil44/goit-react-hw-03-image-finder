@@ -8,6 +8,10 @@ import Modal from '../Modal/Modal';
 export default class PictureSearch extends Component {
   state = { pictures: [], query: '', page: 1, showModal: false, fullImage: '' };
 
+  componentDidMount() {
+    this.fetchPictures();
+  }
+
   componentDidUpdate(prevProps, prevState) {
     const { page } = this.state;
     if (prevState.page !== page) {
@@ -17,21 +21,19 @@ export default class PictureSearch extends Component {
 
   fetchPictures = () => {
     const key = process.env.REACT_APP_API_KEY;
-    const { query, page } = this.state;
+    const { page, query } = this.state;
 
-    if (query) {
-      this.setState({ page: 1 });
-      axios
-        .get(
-          `https://pixabay.com/api/?image_type=photo&orientation=horizontal&q=${query}&page=${page}&per_page=8&key=${key}`,
-        )
-        .then(res =>
-          this.setState(state => ({
-            pictures: [...state.pictures, ...this.mapper(res.data.hits)],
-          })),
-        )
-        .catch(err => console.log(err));
-    }
+    this.setState({ page: 1 });
+    axios
+      .get(
+        `https://pixabay.com/api/?image_type=photo&orientation=horizontal&q=${query}&page=${page}&per_page=8&key=${key}`,
+      )
+      .then(res =>
+        this.setState(state => ({
+          pictures: [...state.pictures, ...this.mapper(res.data.hits)],
+        })),
+      )
+      .catch(err => console.log(err));
   };
 
   mapper = data => {
@@ -60,9 +62,11 @@ export default class PictureSearch extends Component {
     );
   };
 
-  handleQueryChange = ({ target }) => {
-    const { value } = target;
-    this.setState({ query: value, pictures: [] });
+  handleSearchSubmit = query => {
+    this.setState(state => {
+      return state.query !== query && { pictures: [] };
+    });
+    this.setState({ query }, this.fetchPictures);
   };
 
   handleNextPage = () => {
@@ -82,7 +86,7 @@ export default class PictureSearch extends Component {
     return (
       <div className={styles.container}>
         <SearchForm
-          onSubmit={this.fetchPictures}
+          onSubmit={this.handleSearchSubmit}
           onChange={this.handleQueryChange}
           value={query}
         />

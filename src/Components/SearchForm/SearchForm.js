@@ -1,31 +1,41 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './SearchForm.module.css';
 
-const SearchForm = ({ onSubmit, onChange, value }) => {
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    onSubmit();
+export default class SearchForm extends Component {
+  state = { query: '' };
+
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.string.isRequired,
   };
 
-  return (
-    <form className={styles.form} onSubmit={handleSubmit}>
-      <input
-        className={styles.input}
-        type="text"
-        autoComplete="off"
-        value={value}
-        onChange={onChange}
-        placeholder="Search images..."
-      />
-    </form>
-  );
-};
+  handleSubmit = evt => {
+    evt.preventDefault();
+    const { query } = this.state;
+    const { onSubmit } = this.props;
+    onSubmit(query);
+  };
 
-SearchForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
-};
+  handleQueryChange = ({ target }) => {
+    const { value } = target;
+    this.setState({ query: value });
+  };
 
-export default SearchForm;
+  render() {
+    const { query } = this.state;
+    return (
+      <form className={styles.form} onSubmit={this.handleSubmit}>
+        <input
+          className={styles.input}
+          type="text"
+          autoComplete="off"
+          value={query}
+          onChange={this.handleQueryChange}
+          placeholder="Search images..."
+        />
+      </form>
+    );
+  }
+}
